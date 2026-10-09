@@ -1,0 +1,81 @@
+
+# Demo 1 (ECDH and AUTH -> P-384)
+
+```bash
+openssl s_server -num_tickets 0 \ 
+	-cert p384/server-cert-p384.pem \ 
+	-cert_chain p384/int-cert-p384.pem \ 
+	-key p384/server-key-p384.pem -www \ 
+	-accept 4433 -tls1_3 \ 
+	-ciphersuites "TLS_AES_256_GCM_SHA384" \ 
+	-groups "secp384r1"
+```
+```
+openssl s_client -connect localhost:4433 \ 
+	-CAfile p384/trust-chain-p384.pem \ 
+	-brief
+```
+
+
+# Demo 2
+## Server with PQC key exchange (hybrid) and classic auth
+openssl s_server -num_tickets 0 -cert p384/server-cert-p384.pem -cert_chain p384/int-cert-p384.pem -key p384/server-key-p384.pem -www -accept 4433 -tls1_3 -ciphersuites "TLS_AES_256_GCM_SHA384" -groups "SECP384R1MLKEM1024:X25519MLKEM768"
+
+## Client with trusted classic CA
+openssl s_client -connect localhost:4433 -CAfile p384/trust-chain-p384.pem -brief
+
+
+# Demo 3
+## Server PQC with PQC key exchange (hybrid) and auth (pure)
+openssl s_server -num_tickets 0 -cert mldsa87/server-cert-mldsa87.pem -cert_chain mldsa87/int-cert-mldsa87.pem -key mldsa87/server-key-mldsa87.pem -www -accept 4433 -tls1_3 -ciphersuites "TLS_AES_256_GCM_SHA384" -groups "SECP384R1MLKEM1024:X25519MLKEM768"
+
+## Client with trusted PQC CA (pure)
+openssl s_client -connect localhost:4433 -CAfile mldsa87/trust-chain-mldsa87.pem -brief
+
+
+# Demo 4
+## Server PQC with PQC key exchange and auth (hybrid)
+env LD_LIBRARY_PATH=/home/jose/opt/oqs/lib OPENSSL_MODULES=/home/jose/opt/oqs/lib/ossl-modules \
+openssl s_server -num_tickets 0 \
+  -provider oqsprovider -provider default \
+  -cert p384_mldsa65/server-cert-p384_mldsa65.pem \
+  -cert_chain p384_mldsa65/int-cert-p384_mldsa65.pem \
+  -key p384_mldsa65/server-key-p384_mldsa65.pem \
+  -www -accept 4433 -tls1_3 \
+  -ciphersuites "TLS_AES_256_GCM_SHA384" \
+  -groups "SECP384R1MLKEM1024:X25519MLKEM768"
+  
+## Client with trusted PQC CA (hybrid)
+env LD_LIBRARY_PATH=/home/jose/opt/oqs/lib OPENSSL_MODULES=/home/jose/opt/oqs/lib/ossl-modules \
+openssl s_client -connect localhost:4433 \
+  -provider oqsprovider -provider default \
+  -CAfile p384_mldsa65/root-cert-p384_mldsa65.pem \
+  -brief
+  
+# Demo 5  
+## Server PQC with PQC key exchange and auth (hybrid)
+env LD_LIBRARY_PATH=/home/jose/opt/oqs/lib OPENSSL_MODULES=/home/jose/opt/oqs/lib/ossl-modules \
+openssl s_server -num_tickets 0 \
+  -provider oqsprovider -provider default \
+  -cert p521_mldsa87/server-cert-p521_mldsa87.pem \
+  -cert_chain p521_mldsa87/int-cert-p521_mldsa87.pem \
+  -key p521_mldsa87/server-key-p521_mldsa87.pem \
+  -www -accept 4433 -tls1_3 \
+  -ciphersuites "TLS_AES_256_GCM_SHA384" \
+  -groups "SECP384R1MLKEM1024:X25519MLKEM768"
+  
+## Client with trusted PQC CA (hybrid)
+env LD_LIBRARY_PATH=/home/jose/opt/oqs/lib OPENSSL_MODULES=/home/jose/opt/oqs/lib/ossl-modules \
+openssl s_client -connect localhost:4433 \
+  -provider oqsprovider -provider default \
+  -CAfile p521_mldsa87/root-cert-p521_mldsa87.pem \
+  -brief
+  
+# Demo 6  
+## Client with trusted PQC CA (hybrid) - SecP384R1MLKEM1024
+env LD_LIBRARY_PATH=/home/jose/opt/oqs/lib OPENSSL_MODULES=/home/jose/opt/oqs/lib/ossl-modules \
+openssl s_client -connect localhost:4433 \
+  -provider oqsprovider -provider default \
+  -groups "SecP384R1MLKEM1024" \
+  -CAfile p521_mldsa87/root-cert-p521_mldsa87.pem \
+  -brief
