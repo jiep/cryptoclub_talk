@@ -11,13 +11,16 @@
 
 1. Download, compile and install `LibOQS`.
 
-> WARNING: `liboqs` must be installed on `$HOME/opt/oqs/lib`. Set `-DCMAKE_INSTALL_PREFIX=$HOME/opt/oqs` during CMake config.
+> [!WARNING]
+> `liboqs` must be installed on `$HOME/opt/oqs/lib`. Set `-DCMAKE_INSTALL_PREFIX=$HOME/opt/oqs` during CMake config.
 
 2. Download, compile and install `oqs-provider`.
 
-> WARNING: `oqs-provider` requires `oqsprovider.so` to be in directory `$HOME/opt/oqs/lib/ossl-modules/`. Run `cp <build_dir>/lib/oqsprovider.so $HOME/opt/oqs/lib/ossl-modules/` after successfull compilation.
+> [!WARNING]
+> `oqs-provider` requires `oqsprovider.so` to be in directory `$HOME/opt/oqs/lib/ossl-modules/`. Run `cp <build_dir>/lib/oqsprovider.so $HOME/opt/oqs/lib/ossl-modules/` after successfull compilation.
 
-> NOTE: Only demos 4 and 5 require `oqs-provider`.
+> [!NOTE]
+> Only demos 4 and 5 require `oqs-provider`.
 
 ## Demo 1 (ECDH and AUTH -> P-384)
 
