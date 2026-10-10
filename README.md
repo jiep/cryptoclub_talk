@@ -45,7 +45,8 @@ openssl s_client \
 	-brief
 ```
 
-* View on Chrome: `https://localhost:4433`.
+> [!TIP]
+> View on Chrome: `https://localhost:4433`.
 
 
 ## Demo 2 (KEM -> X25519MLKEM768; AUTH -> P-384)
@@ -71,7 +72,8 @@ openssl s_client \
 	-brief
 ```
 
-* View on Chrome: `https://localhost:4433`.
+> [!TIP]
+> View on Chrome: `https://localhost:4433`.
 
 
 ## Demo 3 (KEM -> X25519MLKEM768; AUTH -> ML-DSA-87)
@@ -97,7 +99,8 @@ openssl s_client\
 	-brief
 ```
 
-* View on Chrome: `https://localhost:4433`.
+> [!TIP]
+> View on Chrome: `https://localhost:4433`.
 
 
 ## Demo 3 (KEM -> X25519MLKEM768; AUTH -> ML-DSA-87; browser)
@@ -115,7 +118,8 @@ openssl s_server \
 	-groups "SECP384R1MLKEM1024:X25519MLKEM768"
 ```
 
-* View on Chrome: `https://localhost:4433/web/index.html`.
+> [!TIP]
+> View on Chrome: `https://localhost:4433/web/index.html`.
 
 
 ## Demo 4 (KEM -> X25519MLKEM768; AUTH -> P-384 + ML-DSA-65)
