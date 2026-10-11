@@ -172,3 +172,7 @@ openssl s_client -connect localhost:4433 \
   -groups "SECP384R1MLKEM1024" \
   -brief
 ```
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for the full license text.
