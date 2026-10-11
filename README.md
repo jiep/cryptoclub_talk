@@ -1,4 +1,4 @@
-# Demos 
+# CryptoClub - TLS Demos 
 
 ## Prerrequisites
 
@@ -9,12 +9,12 @@
 
 ## OQS-provider installation
 
-1. Download, compile and install `LibOQS`.
+1. Download, compile and install [`LibOQS`](https://github.com/open-quantum-safe/liboqs).
 
 > [!WARNING]
 > `liboqs` must be installed on `$HOME/opt/oqs/lib`. Set `-DCMAKE_INSTALL_PREFIX=$HOME/opt/oqs` during CMake config.
 
-2. Download, compile and install `oqs-provider`.
+2. Download, compile and install [`oqs-provider`](https://github.com/open-quantum-safe/oqs-provider).
 
 > [!WARNING]
 > `oqs-provider` requires `oqsprovider.so` to be in directory `$HOME/opt/oqs/lib/ossl-modules/`. Run `cp <build_dir>/lib/oqsprovider.so $HOME/opt/oqs/lib/ossl-modules/` after successfull compilation.
