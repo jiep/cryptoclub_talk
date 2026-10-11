@@ -1,8 +1,8 @@
-mkdir -p p384_mldsa65 p521_mldsa87
-
 # P384+ML-DSA-65 certificate chain
 ## Root CA
-env LD_LIBRARY_PATH=/home/jose/opt/oqs/lib OPENSSL_MODULES=/home/jose/opt/oqs/lib/ossl-modules \
+
+```bash
+env LD_LIBRARY_PATH="$HOME/opt/oqs/lib" OPENSSL_MODULES="$HOME/opt/oqs/lib/ossl-modules" \
 openssl req -x509 -nodes -days 365 \
   -provider oqsprovider -provider default \
   -newkey p384_mldsa65 \
@@ -10,9 +10,12 @@ openssl req -x509 -nodes -days 365 \
   -out p384_mldsa65/root-cert-p384_mldsa65.pem \
   -subj "/O=CryptoClub/OU=PQC security (hybrid)/CN=p384_mldsa65 Root CA" \
   -addext "basicConstraints = critical, CA:true"
+```
 
 ## Int CA
-env LD_LIBRARY_PATH=/home/jose/opt/oqs/lib OPENSSL_MODULES=/home/jose/opt/oqs/lib/ossl-modules \
+
+```bash
+env LD_LIBRARY_PATH="$HOME/opt/oqs/lib" OPENSSL_MODULES="$HOME/opt/oqs/lib/ossl-modules" \
 openssl req -new -nodes \
   -provider oqsprovider -provider default \
   -newkey p384_mldsa65 \
@@ -20,7 +23,7 @@ openssl req -new -nodes \
   -keyout p384_mldsa65/int-key-p384_mldsa65.pem \
   -out p384_mldsa65/int-csr-p384_mldsa65.pem
   
-env LD_LIBRARY_PATH=/home/jose/opt/oqs/lib OPENSSL_MODULES=/home/jose/opt/oqs/lib/ossl-modules \
+env LD_LIBRARY_PATH="$HOME/opt/oqs/lib" OPENSSL_MODULES="$HOME/opt/oqs/lib/ossl-modules" \
 openssl x509 -req -days 365 \
   -provider oqsprovider -provider default \
   -in p384_mldsa65/int-csr-p384_mldsa65.pem \
@@ -29,9 +32,12 @@ openssl x509 -req -days 365 \
   -CAcreateserial \
   -extfile <(echo -e "basicConstraints=critical, CA:true\nkeyUsage=critical,digitalSignature,keyCertSign,cRLSign") \
   -out p384_mldsa65/int-cert-p384_mldsa65.pem
+```
 
 ## Server CA
-env LD_LIBRARY_PATH=/home/jose/opt/oqs/lib OPENSSL_MODULES=/home/jose/opt/oqs/lib/ossl-modules \
+
+```bash
+env LD_LIBRARY_PATH="$HOME/opt/oqs/lib" OPENSSL_MODULES="$HOME/opt/oqs/lib/ossl-modules" \
 openssl req -new -nodes \
   -provider oqsprovider -provider default \
   -newkey p384_mldsa65 \
@@ -39,7 +45,7 @@ openssl req -new -nodes \
   -keyout p384_mldsa65/server-key-p384_mldsa65.pem \
   -out p384_mldsa65/server-csr-p384_mldsa65.pem
   
-env LD_LIBRARY_PATH=/home/jose/opt/oqs/lib OPENSSL_MODULES=/home/jose/opt/oqs/lib/ossl-modules \
+env LD_LIBRARY_PATH="$HOME/opt/oqs/lib" OPENSSL_MODULES="$HOME/opt/oqs/lib/ossl-modules" \
 openssl x509 -req -days 365 \
   -provider oqsprovider -provider default \
   -in p384_mldsa65/server-csr-p384_mldsa65.pem \
@@ -48,3 +54,4 @@ openssl x509 -req -days 365 \
   -CAcreateserial \
   -extfile <(echo -e "subjectAltName = DNS:localhost, IP:127.0.0.1\nkeyUsage=critical,digitalSignature,keyEncipherment\nextendedKeyUsage=serverAuth") \
   -out p384_mldsa65/server-cert-p384_mldsa65.pem
+```
